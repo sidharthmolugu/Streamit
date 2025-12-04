@@ -77,6 +77,7 @@ Run frontend:
 npm run dev
 
 Notes
+The Render backend uses temporary storage for uploaded files. If the server restarts, uploaded videos may disappear. Re-upload the video to view it again.
 
 The backend requires MongoDB Atlas with IP Access set to 0.0.0.0/0.
 
