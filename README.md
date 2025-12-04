@@ -1,52 +1,51 @@
+Pulse Assignment
 
-Pulsevid is a full-stack web application built using a React (Vite) frontend and a Node.js + Express + Socket.IO backend with MongoDB Atlas as the database.
-It supports user authentication, video uploads, and real-time communication.
+A full-stack web application built with:
+
+React (Vite) frontend
+
+Node.js + Express backend
+
+Socket.IO for real-time communication
+
+MongoDB Atlas database
+
+This project implements user authentication, video uploads, and real-time events.
 
 Live Website:
 https://pulse-assignment-livid.vercel.app/
 
-Tech Stack
-Frontend
+Backend URL (Example):
+https://pulse-assignment-bmpx.onrender.com/
 
-React (Vite)
+Features
 
-Axios
+User registration and login with JWT
 
-Basic CSS
+Video upload and listing
 
-Backend
+Real-time communication using Socket.IO
 
-Node.js + Express
+React frontend with Axios for API requests
 
-Socket.IO
+Node/Express backend with REST APIs
 
-Mongoose (MongoDB)
-
-Multer
-
-JWT Authentication
-
-Database
-
-MongoDB Atlas
+MongoDB Atlas for persistent storage
 
 Project Structure
 
-/backend
- ├── index.js — Express + Socket.IO server
- ├── routes/
- │ ├── auth.js — login and registration routes
- │ └── videos.js — video upload and socket logic
- ├── models/
- │ └── User.js — Mongoose user schema
+backend/
+• index.js — server entrypoint
+• routes/auth.js — authentication routes
+• routes/videos.js — video handling
+• models/User.js — user schema
+• uploads/ — uploaded video files
 
-/frontend
- ├── src/
- │ ├── components/
- │ ├── pages/
- │ └── utils/
- ├── vite.config.js
- └── package.json
+frontend/
+• src/components — UI components
+• src/pages — pages
+• src/utils — helper functions
+• vite.config.js
 
 Backend Setup
 
@@ -55,20 +54,15 @@ Navigate to backend:
 cd backend
 npm install
 
-Create a .env file:
+Create .env using .env.example:
 
-MONGO_URI=<your MongoDB Atlas URL>
-JWT_SECRET=<your secret key>
+MONGO_URI=<your MongoDB URI>
+JWT_SECRET=<your secret>
 PORT=4000
 
-Start the backend:
+Start backend:
 
 npm start
-
-Expected output:
-
-Mongo connected
-Server listening on 4000
 
 Frontend Setup
 
@@ -81,65 +75,24 @@ Create .env:
 
 VITE_API_URL=http://localhost:4000
 
-Start development server:
+Run frontend:
 
 npm run dev
 
-Frontend runs at:
-http://localhost:5173
+Notes
 
-Features
+The backend requires MongoDB Atlas with IP Access set to 0.0.0.0/0.
 
-User registration and login
+The folder backend/uploads must exist.
 
-JWT-based authentication
+CORS must allow both localhost and the deployed frontend domain.
 
-Video upload and listing
-
-Real-time communication using Socket.IO
-
-Decoupled backend and frontend
-
-MongoDB persistent storage
-
-Important Notes
-MongoDB Atlas Access
-
-Your Atlas cluster must allow:
-
-0.0.0.0/0
-
-(Atlas → Network Access → Add IP → Allow Access From Anywhere)
-
-Environment Variables
-
-Backend (Render):
-MONGO_URI=
-JWT_SECRET=
-
-Frontend (Vercel):
-VITE_API_URL=<your backend URL>
-
-CORS
-
-Backend must allow:
-
-http://localhost:5173
-
-https://pulse-assignment-livid.vercel.app
-
-Socket.IO
-
-Socket.IO must enable both websocket and polling transports to work on Render/Vercel.
-
-Uploads Folder
-
-The folder /backend/uploads must exist for video uploads.
+Environment variables should not be committed; instead use .env.example.
 
 Deployment
 
-Frontend (Vercel):
-https://pulse-assignment-livid.vercel.app/
+Frontend deployed on Vercel
 
-Backend (Render):
-https://pulse-assignment-bmpx.onrender.com/
+Backend deployed on Render
+
+Both connected using environment variables
