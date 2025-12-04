@@ -15,9 +15,6 @@ This project implements user authentication, video uploads, and real-time events
 Live Website:
 https://pulse-assignment-livid.vercel.app/
 
-Backend URL (Example):
-https://pulse-assignment-bmpx.onrender.com/
-
 Features
 
 User registration and login with JWT
