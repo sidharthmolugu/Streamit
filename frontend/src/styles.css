@@ -243,3 +243,34 @@ h2 {
     align-items: center;
   }
 }
+
+/* Responsive styles */
+@media (max-width: 768px) {
+  .app-container {
+    padding: 8px;
+  }
+
+  .topbar-inner {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .nav {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .main-content {
+    padding: 16px;
+  }
+
+  .hero-card {
+    text-align: center;
+  }
+
+  .btn {
+    width: 100%;
+    max-width: 300px;
+  }
+}

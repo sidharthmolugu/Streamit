@@ -39,10 +39,22 @@ export default function Auth({ onLogin, initialMode = "login", onClose }) {
   }
 
   return (
-    <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 16 }}>
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        gap: 16,
+      }}
+    >
       <form
         onSubmit={submit}
-        style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 12 }}
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          gap: 12,
+        }}
       >
         <input
           placeholder="username"

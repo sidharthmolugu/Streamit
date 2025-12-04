@@ -50,6 +50,7 @@ export default function App() {
         minHeight: "100vh",
         background: "#f8fafc",
       }}
+      className="app-container"
     >
       <header className="topbar">
         <div className="topbar-inner">
@@ -110,7 +111,7 @@ export default function App() {
         </div>
       </header>
 
-      <main style={{ padding: "24px 16px" }}>
+      <main className="main-content" style={{ padding: "24px 16px" }}>
         {route === "home" && (
           <div className="hero">
             <div className="hero-card">
