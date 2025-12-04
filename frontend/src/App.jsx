@@ -5,10 +5,16 @@ import Auth from "./components/Auth";
 import axios from "axios";
 
 export default function App() {
+  // State to store the logged-in user details
   const [user, setUser] = useState(null);
+
+  // State to control the visibility of the authentication modal
   const [showAuth, setShowAuth] = useState(null); // 'login' | 'register' | null
+
+  // State to manage the current route in the app
   const [route, setRoute] = useState("home"); // 'home' | 'upload' | 'library'
 
+  // Load user details and token from localStorage on app load
   useEffect(() => {
     const t = localStorage.getItem("token");
     const u = localStorage.getItem("user");
@@ -24,6 +30,7 @@ export default function App() {
     }
   }, []);
 
+  // Handle user login and save token/user details
   function onLogin(token, userObj) {
     localStorage.setItem("token", token);
     localStorage.setItem("user", JSON.stringify(userObj));
@@ -32,6 +39,7 @@ export default function App() {
     setShowAuth(null);
   }
 
+  // Handle user logout and clear token/user details
   function onLogout() {
     localStorage.removeItem("token");
     localStorage.removeItem("user");
@@ -39,6 +47,7 @@ export default function App() {
     setUser(null);
   }
 
+  // Navigate to a specific route
   function navTo(r) {
     setRoute(r);
   }
@@ -52,6 +61,7 @@ export default function App() {
       }}
       className="app-container"
     >
+      {/* Header section with navigation and user info */}
       <header className="topbar">
         <div className="topbar-inner">
           <div className="brand" onClick={() => navTo("home")}>
@@ -111,6 +121,7 @@ export default function App() {
         </div>
       </header>
 
+      {/* Main content area */}
       <main className="main-content" style={{ padding: "24px 16px" }}>
         {route === "home" && (
           <div className="hero">

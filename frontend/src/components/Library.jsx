@@ -5,6 +5,7 @@ import io from "socket.io-client";
 const API = import.meta.env.VITE_API_URL || "http://localhost:4001";
 const SOCKET = io(API);
 
+// Component to render a video player for a specific video
 function VideoPlayer({ video }) {
   const src = API + "/api/videos/stream/" + video.filename;
   return (
@@ -23,11 +24,15 @@ function VideoPlayer({ video }) {
   );
 }
 
+// Main Library component to display a list of videos
 export default function Library({ currentUser }) {
   const [videos, setVideos] = useState([]);
 
+  // Fetch the list of videos on component mount
   useEffect(() => {
     fetchList();
+
+    // Listen for real-time updates on video processing
     const handler = (d) => {
       if (!d || !d.videoId) return;
       setVideos((prev) =>
@@ -43,7 +48,7 @@ export default function Library({ currentUser }) {
           return v;
         })
       );
-      // if we don't have the video yet, refresh list
+      // If the video is not in the list, refresh the list
       if (!videos.find((x) => String(x._id) === String(d.videoId))) fetchList();
     };
 
@@ -54,6 +59,7 @@ export default function Library({ currentUser }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  // Fetch the list of videos from the API
   async function fetchList() {
     try {
       const res = await axios.get(API + "/api/videos");
@@ -63,6 +69,7 @@ export default function Library({ currentUser }) {
     }
   }
 
+  // Handle video deletion
   async function handleDelete(id) {
     if (!currentUser) return alert("Login required");
     if (!confirm("Delete this video?")) return;
@@ -75,6 +82,7 @@ export default function Library({ currentUser }) {
     }
   }
 
+  // Override video sensitivity (admin/editor only)
   async function overrideSensitivity(id, value) {
     if (!currentUser) return alert("Login required");
     try {

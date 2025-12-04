@@ -3,21 +3,25 @@ import axios from "axios";
 
 const API = import.meta.env.VITE_API_URL || "http://localhost:4001";
 
+// Authentication component for login and registration
 export default function Auth({ onLogin, initialMode = "login", onClose }) {
-  const [mode, setMode] = useState(initialMode);
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-  const [loading, setLoading] = useState(false);
+  const [mode, setMode] = useState(initialMode); // Current mode: 'login' or 'register'
+  const [username, setUsername] = useState(""); // Username input state
+  const [password, setPassword] = useState(""); // Password input state
+  const [loading, setLoading] = useState(false); // Loading state for API requests
 
+  // Update mode when the initialMode prop changes
   useEffect(() => {
     setMode(initialMode);
   }, [initialMode]);
 
+  // Handle form submission for login or registration
   async function submit(e) {
     e && e.preventDefault();
     setLoading(true);
     try {
       if (mode === "login") {
+        // Login API call
         const res = await axios.post(API + "/api/auth/login", {
           username,
           password,
@@ -26,6 +30,7 @@ export default function Auth({ onLogin, initialMode = "login", onClose }) {
         onLogin(token, user);
         if (onClose) onClose();
       } else {
+        // Registration API call
         await axios.post(API + "/api/auth/register", { username, password });
         setMode("login");
         alert("Registered — please login");
@@ -39,40 +44,28 @@ export default function Auth({ onLogin, initialMode = "login", onClose }) {
   }
 
   return (
-    <div
-      style={{
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        gap: 16,
-      }}
-    >
+    <div style={{ display: "flex", gap: 8, alignItems: "center" }}>
+      {/* Form for username and password input */}
       <form
         onSubmit={submit}
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          gap: 12,
-        }}
+        style={{ display: "flex", gap: 8, alignItems: "center" }}
       >
         <input
           placeholder="username"
           value={username}
           onChange={(e) => setUsername(e.target.value)}
-          style={{ padding: "8px", width: "100%", maxWidth: "300px" }}
         />
         <input
           placeholder="password"
           type="password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
-          style={{ padding: "8px", width: "100%", maxWidth: "300px" }}
         />
         <button className="btn" disabled={loading} type="submit">
           {mode === "login" ? "Login" : "Register"}
         </button>
       </form>
+      {/* Toggle between login and registration modes */}
       <button
         style={{
           background: "transparent",
