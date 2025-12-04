@@ -20,7 +20,7 @@ const allowedOrigins = [
 ];
 
 // ---------------------
-// Socket.io
+// Socket.io (FULLY FIXED)
 // ---------------------
 const io = socketio(server, {
   cors: {
@@ -28,6 +28,8 @@ const io = socketio(server, {
     methods: ["GET", "POST"],
     credentials: true,
   },
+  transports: ["websocket", "polling"], // REQUIRED on Render
+  allowEIO3: true, // Fix CORS for polling fallback
 });
 
 // ---------------------
