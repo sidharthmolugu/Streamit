@@ -1,4 +1,4 @@
-Pulse Assignment
+Streamit
 
 A full-stack web application built with:
 
@@ -10,7 +10,7 @@ MongoDB Atlas database
 This project implements user authentication, video uploads, and real-time events.
 
 Live Website:
-https://pulse-assignment-livid.vercel.app/
+
 
 Features:
 User registration and login with JWT

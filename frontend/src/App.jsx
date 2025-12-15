@@ -5,16 +5,10 @@ import Auth from "./components/Auth";
 import axios from "axios";
 
 export default function App() {
-  // State to store the logged-in user details
   const [user, setUser] = useState(null);
+  const [showAuth, setShowAuth] = useState(null);
+  const [route, setRoute] = useState("home");
 
-  // State to control the visibility of the authentication modal
-  const [showAuth, setShowAuth] = useState(null); // 'login' | 'register' | null
-
-  // State to manage the current route in the app
-  const [route, setRoute] = useState("home"); // 'home' | 'upload' | 'library'
-
-  // Load user details and token from localStorage on app load
   useEffect(() => {
     const t = localStorage.getItem("token");
     const u = localStorage.getItem("user");
@@ -30,7 +24,6 @@ export default function App() {
     }
   }, []);
 
-  // Handle user login and save token/user details
   function onLogin(token, userObj) {
     localStorage.setItem("token", token);
     localStorage.setItem("user", JSON.stringify(userObj));
@@ -39,7 +32,6 @@ export default function App() {
     setShowAuth(null);
   }
 
-  // Handle user logout and clear token/user details
   function onLogout() {
     localStorage.removeItem("token");
     localStorage.removeItem("user");
@@ -47,7 +39,6 @@ export default function App() {
     setUser(null);
   }
 
-  // Navigate to a specific route
   function navTo(r) {
     setRoute(r);
   }
@@ -61,12 +52,11 @@ export default function App() {
       }}
       className="app-container"
     >
-      {/* Header section with navigation and user info */}
       <header className="topbar">
         <div className="topbar-inner">
           <div className="brand" onClick={() => navTo("home")}>
-            <div className="logo">PulseVid</div>
-            <div className="muted">pulsevid-video platform</div>
+            <div className="logo">StreamIt</div>
+            <div className="muted">streamit-video platform</div>
           </div>
 
           <nav className="nav">
@@ -121,7 +111,6 @@ export default function App() {
         </div>
       </header>
 
-      {/* Main content area */}
       <main className="main-content" style={{ padding: "24px 16px" }}>
         {route === "home" && (
           <div className="hero">
@@ -130,7 +119,7 @@ export default function App() {
                 Secure, scalable video sensitivity analysis
               </h1>
               <p className="hero-sub">
-                pulsevid-video platform — upload videos, get real-time
+                streamit-video platform — upload videos, get real-time
                 processing updates, and securely stream processed content.
               </p>
 
@@ -168,12 +157,21 @@ export default function App() {
               </div>
 
               {showAuth && !user && (
-                <div style={{ marginTop: 18 }}>
-                  <Auth
-                    initialMode={showAuth}
-                    onLogin={onLogin}
-                    onClose={() => setShowAuth(null)}
-                  />
+                <div
+                  style={{
+                    marginTop: 18,
+                    width: "100%",
+                    display: "flex",
+                    justifyContent: "center",
+                  }}
+                >
+                  <div style={{ width: "100%", maxWidth: 450 }}>
+                    <Auth
+                      initialMode={showAuth}
+                      onLogin={onLogin}
+                      onClose={() => setShowAuth(null)}
+                    />
+                  </div>
                 </div>
               )}
             </div>

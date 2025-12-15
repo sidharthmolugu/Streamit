@@ -1,4 +1,4 @@
-# pulsevid-video platform — Frontend (Vite + React)
+# streamit-video platform — Frontend (Vite + React)
 
 Setup:
 

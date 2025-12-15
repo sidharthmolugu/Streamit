@@ -16,7 +16,7 @@ const server = http.createServer(app);
 // ---------------------
 const allowedOrigins = [
   "http://localhost:5173",
-  "https://pulse-assignment-livid.vercel.app",
+  "https://streamit-livid.vercel.app",
 ];
 
 // ---------------------
