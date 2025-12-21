@@ -20,7 +20,7 @@ const server = http.createServer(app);
 // ---------------------
 const allowedOrigins = [
   "http://localhost:5173",
-  "https://streamit-livid.vercel.app",
+  "https://streamit-inky.vercel.app",
 ];
 
 // ---------------------
