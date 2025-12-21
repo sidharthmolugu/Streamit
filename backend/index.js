@@ -4,7 +4,7 @@ const mongoose = require("mongoose");
 const cors = require("cors");
 const socketio = require("socket.io");
 const path = require("path");
-require("dotenv").config();
+
 
 const videosRouter = require("./routes/videos");
 const authRouter = require("./routes/auth");
@@ -16,16 +16,10 @@ const app = express();
 const server = http.createServer(app);
 
 // ---------------------
-// Allowed origins
+// CORS (ENV-BASED, SAFE)
 // ---------------------
-const allowedOrigins = [
-  "http://localhost:5173",
-  "https://streamit-inky.vercel.app",
-];
+const allowedOrigins = ["http://localhost:5173", process.env.CORS_ORIGIN];
 
-// ---------------------
-// Express CORS
-// ---------------------
 app.use(
   cors({
     origin: allowedOrigins,
@@ -42,11 +36,9 @@ app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 const io = socketio(server, {
   cors: {
     origin: allowedOrigins,
-    methods: ["GET", "POST"],
     credentials: true,
   },
   transports: ["websocket", "polling"],
-  allowEIO3: true,
 });
 
 // ---------------------
@@ -55,9 +47,7 @@ const io = socketio(server, {
 app.use("/api/auth", authRouter);
 app.use("/api/videos", videosRouter(io));
 
-// ---------------------
-// MongoDB
-// ---------------------
+
 const MONGO_URI = process.env.MONGO_URI;
 
 if (!MONGO_URI) {
@@ -74,9 +64,9 @@ mongoose
   });
 
 // ---------------------
-// Start server (Render-safe)
+// Start server (Render-controlled PORT)
 // ---------------------
-const PORT = process.env.PORT || 4000;
+const PORT = process.env.PORT;
 
 server.listen(PORT, () => {
   console.log(`🚀 Server running on port ${PORT}`);
