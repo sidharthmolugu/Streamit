@@ -5,35 +5,45 @@ const API = import.meta.env.VITE_API_URL || "http://localhost:4001";
 
 // Authentication component for login and registration
 export default function Auth({ onLogin, initialMode = "login", onClose }) {
-  const [mode, setMode] = useState(initialMode); // Current mode: 'login' or 'register'
-  const [username, setUsername] = useState(""); // Username input state
-  const [password, setPassword] = useState(""); // Password input state
-  const [loading, setLoading] = useState(false); // Loading state for API requests
+  const [mode, setMode] = useState(initialMode);
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
 
-  // Update mode when the initialMode prop changes
   useEffect(() => {
     setMode(initialMode);
   }, [initialMode]);
 
-  // Handle form submission for login or registration
   async function submit(e) {
-    e && e.preventDefault();
+    e.preventDefault();
     setLoading(true);
+
     try {
       if (mode === "login") {
-        // Login API call
-        const res = await axios.post(API + "/api/auth/login", {
-          username,
-          password,
-        });
-        const { token, user } = res.data;
-        onLogin(token, user);
+        // LOGIN (COOKIE-BASED AUTH)
+        const res = await axios.post(
+          `${API}/api/auth/login`,
+          { username, password },
+          { withCredentials: true } // REQUIRED
+        );
+
+        // Backend now returns ONLY user (token is in cookie)
+        const { user } = res.data;
+
+        // Notify parent app that login succeeded
+        onLogin(user);
+
         if (onClose) onClose();
       } else {
-        // Registration API call
-        await axios.post(API + "/api/auth/register", { username, password });
-        setMode("login");
+        // REGISTER
+        await axios.post(
+          `${API}/api/auth/register`,
+          { username, password },
+          { withCredentials: true }
+        );
+
         alert("Registered — please login");
+        setMode("login");
       }
     } catch (err) {
       console.error(err);
@@ -45,7 +55,6 @@ export default function Auth({ onLogin, initialMode = "login", onClose }) {
 
   return (
     <div style={{ display: "flex", gap: 8, alignItems: "center" }}>
-      {/* Form for username and password input */}
       <form
         onSubmit={submit}
         style={{ display: "flex", gap: 8, alignItems: "center" }}
@@ -65,7 +74,7 @@ export default function Auth({ onLogin, initialMode = "login", onClose }) {
           {mode === "login" ? "Login" : "Register"}
         </button>
       </form>
-      {/* Toggle between login and registration modes */}
+
       <button
         style={{
           background: "transparent",
